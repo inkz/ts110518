@@ -2,27 +2,30 @@
 // Написать функцию isInArray(), которая начиная со второго принимает переменное количество аргументов.
 //     Возвращает true, если все аргументы, кроме первого входят в первый.
 //     Первым всегда должен быть массив.
+type snb = string|number|boolean;
 
-function isInArray(arr: (string|number|boolean)[], ...obj: string|number|boolean): boolean {
-    let result = true;
-    obj.forEach((o) => {
-        if (!arr.includes(o)) {
-            result = false;
-        }
-    });
-    return result;
+function isInArray(arr: snb[], ...args: snb[]): boolean {
+    return args.every((val) => arr.indexOf(val) > -1);
 }
 
 // 2)
 // писать функцию summator(), которая сумирует переданые ей аргументы.
 //     Аргументы могут быть либо строкового либо числового типа. Количество их не ограничено
 
-function summator(...args: string|number): string|number {
-    let result;
-    args.forEach((arg) => {
-       result = result ? result + arg : arg;
+type sn = string|number;
+
+function summator(...args: sn[]): sn {
+    return args.reduce((sum, current) => {
+        if (typeof current === 'string') {
+            return sum + current;
+        } else {
+            if (typeof sum === 'string') {
+                return sum + current;
+            } else {
+                return sum + current;
+            }
+        }
     });
-    return result;
 }
 
 // 3)
@@ -31,14 +34,8 @@ function summator(...args: string|number): string|number {
 //     Порядок элементов результирующего массива должен совпадать с порядком,
 //     в котором они встречаются в оригинальной структуре.
 
-function getUnique(...args: string|number|boolean): (string|number|boolean)[] {
-    const result = [];
-    args.forEach((arg) => {
-       if (!result.includes(arg)) {
-           result.push(arg);
-       }
-    });
-    return result;
+function getUnique(...args: snb[]): snb[] {
+    return args.filter((val, i, arr) => arr.indexOf(val) === i);
 }
 
 // 4)
@@ -49,10 +46,10 @@ function getUnique(...args: string|number|boolean): (string|number|boolean)[] {
 // s1tar3t 2   low5  ->  t1rat3s 2   wol5
 
 function flipWords(statetement: string): string {
-    let result = [];
-    let parts = statetement.split(' ');
+    const result: string[] = [];
+    const parts: string[] = statetement.split(' ');
     parts.forEach((part) => {
-        let flip = [];
+        const flip: string[] = [];
         for (let i = 0; i < part.length; i++) {
             if (part[i].toUpperCase() < 'A' || part[i].toUpperCase() > 'Z') {
                 flip[i] = part[i];
